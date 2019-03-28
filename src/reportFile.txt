@@ -1,0 +1,12 @@
+@TEST1: 
+It's a palindrome.
+@TEST2: 
+It's a palindrome.
+@TEST3: 
+It's a palindrome.
+@TEST4: 
+It's a palindrome.
+@TEST5: 
+It isn't a palindrome
+@TEST6: 
+It's a palindrome.
