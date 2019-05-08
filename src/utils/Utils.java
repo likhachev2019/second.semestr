@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Utils {
@@ -141,5 +142,60 @@ public class Utils {
             return str.length() <= checkIndex || str.charAt(checkIndex) == ' ';
         else
             return false;
+    }
+
+    public static int[] listToArray(ArrayList<Integer> array){
+        int lenght = array.size();
+        int [] arrayInt = new int[lenght];
+        int index = 0;
+
+        for(; lenght > 0; lenght--, index++){
+            arrayInt[index] = array.get(index);
+        }
+        return arrayInt;
+    }
+
+    public static ArrayList<Integer> stringToList(String str) throws ArrayNotFoundException{
+        if (str == null)
+            return null;
+
+        int startIndex = str.indexOf(FIRST_SYMBOL), endIndex = str.indexOf(END_SYMBOL), fromFirstDot = 0, secondDot = startIndex;
+
+        ArrayList<Integer> arrayList = new ArrayList<>();
+        String sub;
+
+        if (startIndex < endIndex){
+            while(true) {
+                fromFirstDot = ++secondDot;
+                secondDot = str.indexOf(SEPARATOR, fromFirstDot);
+                if (secondDot == -1 || secondDot > endIndex) {
+                    sub = str.substring(fromFirstDot, endIndex);
+                    try{
+                        arrayList.add(Integer.valueOf(sub.trim()));
+                    }
+                    catch (NumberFormatException e){
+                        throw new ArrayNotFoundException(str);
+                    }
+                    return arrayList;
+                }
+                sub = str.substring(fromFirstDot, secondDot);
+                try{
+                    arrayList.add(Integer.valueOf(sub.trim()));
+                }
+                catch (NumberFormatException e){
+                    throw new ArrayNotFoundException(str);
+                }
+            }
+        }
+        else
+            throw new ArrayNotFoundException(str);
+    }
+
+    public static int[] stringToArray(String str){
+        return listToArray(stringToList(str));
+    }
+
+    public static boolean isArray(String input) {
+        return input.matches("^\\{([+-]?\\d+,)*-?\\d+}$");
     }
 }

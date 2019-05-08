@@ -1,26 +1,27 @@
 package topic4.task2;
 
-import java.util.Arrays;
-
 class SortState {
 
 //    Копия частичного отсортированного исходного массива чисел.
     private int[] currentArray;
-//    Значение, сортируемое в данный момент.
     private int value;
-//    Позиция элемента в исходном массиве
+//    Позиция элемента, сортируемого в данный момент в исходном массиве
     private int i,
-//    Индекс сравниваемого элемента с данным из отсортированно части массива.
+//    Индекс элемента, сравниваемого с данным, из отсортированной части массива.
         j;
 
-    SortState(int[] currentArray, int i, int j, int value) {
+    SortState(int[] currentArray) {
+        this.currentArray = currentArray;
+    }
+
+    SortState(int[] currentArray, int value, int i, int j) {
         this.currentArray = currentArray;
         this.i = i;
         this.j = j;
         this.value = value;
     }
 
-    String getCurrentArray() {
+    String toStringCurrArray() {
         StringBuilder builder = new StringBuilder();
         builder.append("{ ");
         for(int i : currentArray) {
@@ -32,15 +33,19 @@ class SortState {
         return builder.toString();
     }
 
-    public int getI() {
-        return i;
+    int get(int i) {
+        return currentArray[i];
     }
 
-    public int getJ() {
+    int getJIndex() {
         return j;
     }
 
-    public int getValue() {
+    int getIndexValue() {
+        return i;
+    }
+
+    int getValue(){
         return value;
     }
 }

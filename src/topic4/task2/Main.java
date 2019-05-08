@@ -7,7 +7,7 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-        int[] arr = {1,-2,-99,900,1000,11,12};
+        int[] arr = {};
         List<SortState> states = insertSort(arr);
         StatePlayer player = new StatePlayer(states);
         player.setVisible(true);
@@ -18,21 +18,23 @@ public class Main {
      *
      * @param arr Сортируемый массив целых (примитивный тип int) чисел
      */
-    private static List<SortState> insertSort(int[] arr) {
+    static List<SortState> insertSort(int[] arr) {
         List<SortState> states = new ArrayList<>();
+        states.add(new SortState(Arrays.copyOf(arr,arr.length)));
         for (int i = 0; i < arr.length; i++) {
             int value = arr[i];
             // поиск места элемента в готовой последовательности
             int j;
             for (j = i - 1; j >= 0 && arr[j] > value; j--) {
-                arr[j + 1] = arr[j]; 	// сдвигаем элемент направо, пока не дошли до начала массива или элементы уже меньше данного
-                states.add(new SortState(Arrays.copyOf(arr,arr.length), value, i, j));
+                arr[j + 1] = arr[j]; 	// сдвигаем элементы вправо, пока не дошли до нужного места взятого value
+                arr[j] = value;
+                states.add(new SortState(Arrays.copyOf(arr,arr.length), value, i, j+1));
             }
-            // если ни один элемент не оказался больше текущего или он стоит на первой позиции (не зашли в вложенный цикл)
             // место найдено, вставить элемент
             arr[j + 1] = value;
-            if (i + 1 ==  arr.length)
-                states.add(new SortState(Arrays.copyOf(arr,arr.length), value, i, j));
+            // если ни один элемент не оказался больше текущего или он стоит на первой позиции (не зашли в вложенный цикл)
+            if (j == i - 1 || i == 0)
+                states.add(new SortState(Arrays.copyOf(arr,arr.length), value, i, -1));
         }
         return states;
     }
