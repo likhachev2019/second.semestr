@@ -11,63 +11,6 @@ class Main {
 
     private static final String FILE_PATH = "src/topic7/task1/test.txt";
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public static void main(String[] args) {
         String[][] adjacencyMatrix = parseFile(FILE_PATH);
         Graph graph = new Graph(adjacencyMatrix);
