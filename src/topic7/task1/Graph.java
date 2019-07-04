@@ -56,10 +56,21 @@ class Graph {
         StringBuilder res = new StringBuilder();
         res.append("Недостижимые вершины: ");
         for (int i = 0; i < nodes.size(); i++) {
-            if (!node.links.contains(nodes.get(i)))
+            if (!check(node, nodes.get(i), new ArrayList<Node>()))
                 res.append(String.format("%s ", nodes.get(i)));
         }
         return res.toString();
+    }
+
+    private boolean check(Node start, Node end,List<Node> checkedNodes) {
+        checkedNodes.add(start);   // каждую вершину, достижимость из которой уже проверялась, добавляем в список
+        if (start.links.contains(end)) // Если вершины смежны
+            return true;
+        else                            // иначе проверяем достижима ли вершина 'end' из любой смежной с вершиной 'start'
+            for (Node n: start.links)
+             if (!checkedNodes.contains(n) && check(n, end, checkedNodes))
+                 return true;
+        return false;
     }
 
     class Node {
